@@ -745,7 +745,9 @@ fn find_with_user_predicate() {
         .args(["test_data", "-user", " "])
         .assert()
         .failure()
-        .stderr(predicate::str::contains("is not the name of a known user"))
+        .stderr(predicate::str::contains(
+            "invalid user name or UID argument to -user",
+        ))
         .stdout(predicate::str::is_empty());
 }
 
@@ -815,7 +817,7 @@ fn find_with_group_predicate() {
         .assert()
         .failure()
         .stderr(predicate::str::contains(
-            "is not the name of an existing group",
+            "invalid group name or GID argument to -group:",
         ))
         .stdout(predicate::str::is_empty());
 }
@@ -929,7 +931,7 @@ fn find_age_range() {
                 .failure()
                 .code(1)
                 .stderr(predicate::str::contains(
-                    "Error: Expected a decimal integer (with optional + or - prefix) argument to",
+                    "find: Expected a decimal integer (with optional + or - prefix) argument to",
                 ))
                 .stdout(predicate::str::is_empty());
         }
